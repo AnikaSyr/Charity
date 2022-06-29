@@ -24,12 +24,13 @@ public class HomeController {
     }
 
     @GetMapping(value = "/")
-    public String getAll(Model model){
+    public String getAll(Model model) {
         List<Institution> institutions = institutionService.listAll();
-        Integer sum = donationService.sumUp();
+        int sum = donationService.sumUp();
         long count = donationService.countAllDonations();
         model.addAttribute("institutions", institutions);
         model.addAttribute("sum", sum);
         model.addAttribute("count", count);
-        return "index";}
+        return "index";
+    }
 }

@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
   /**
    * Form Select
    */
+
+
   class FormSelect {
     constructor($el) {
       this.$el = $el;
@@ -124,6 +126,22 @@ document.addEventListener("DOMContentLoaded", function() {
       // Next step
       this.$next.forEach(btn => {
         btn.addEventListener("click", e => {
+          let quantity = $('#quantity').val();
+          $('#quantityConf').text(quantity);
+          let institution = $('#institution').val();
+          $('#institutionConf').text(institution);
+          let street = $('#street').val();
+          $('#streetConf').text(street);
+          let city = $('#city').val();
+          $('#cityConf').text(city);
+          let zip = $('#zipCode').val();
+          $('#zipCodeConf').text(zip);
+          let date = $('#date').val();
+          $('#dateConf').text(date);
+          let time = $('#time').val();
+          $('#timeConf').text(time);
+          let notes = $('#notes').val();
+          $('#notesConf').text(notes);
           e.preventDefault();
           this.currentStep++;
           this.updateForm();
