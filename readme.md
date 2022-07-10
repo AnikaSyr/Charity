@@ -1,5 +1,5 @@
 
-#Charity
+# Charity
 
 A java-based web application in which people can donate goods to
 selected charity organisations.
