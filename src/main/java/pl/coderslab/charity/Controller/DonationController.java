@@ -44,7 +44,7 @@ public class DonationController {
         return "form";
     }
 
-    @RequestMapping(value = "/form/confirmation", method = RequestMethod.POST)
+    @RequestMapping(value = "/form", method = RequestMethod.POST)
     public String handle(@Valid Donation donation, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             logger.error("incorrect data");
@@ -54,8 +54,11 @@ public class DonationController {
         donationService.save(donation);
 
 
-        return "redirect:/";
-
+        return "redirect:/form/confirmation";
+    }
+    @RequestMapping(value = "/form/confirmation", method = RequestMethod.GET)
+    public String confirmation () {
+        return "form_confirmation";
     }
 
 }

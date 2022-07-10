@@ -1,4 +1,4 @@
-<%@include file="fragments/header.jsp"%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -6,12 +6,25 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-
-    <title>Document</title>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Charity</title>
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
 </head>
-<body>
 
+<header class="header--main-page">
+    <%@include file="fragments/header.jsp"%>
+<div class="slogan container container--90">
+    <div class="slogan--item">
+        <h1>
+            Zacznij pomagać!<br/>
+            Oddaj niechciane rzeczy w zaufane ręce
+        </h1>
+    </div>
+</div>
+</header>
+<body>
 <section class="stats">
     <div class="container container--85">
         <div class="stats--item">
