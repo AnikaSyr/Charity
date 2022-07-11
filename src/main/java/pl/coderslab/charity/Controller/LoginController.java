@@ -10,10 +10,15 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.coderslab.charity.Model.ConfirmationToken;
+import pl.coderslab.charity.Model.User;
 import pl.coderslab.charity.Object.UserDTO;
+import pl.coderslab.charity.Service.ConfirmationTokenService;
 import pl.coderslab.charity.Service.UserServiceImpl;
 
 import javax.validation.Valid;
+
+import java.time.LocalDateTime;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -23,9 +28,11 @@ public class LoginController {
 
     private final Logger logger = LoggerFactory.getLogger(LoginController.class);
     private final UserServiceImpl userService;
+    private final ConfirmationTokenService confirmationTokenService;
 
-    public LoginController(UserServiceImpl userService) {
+    public LoginController(UserServiceImpl userService, ConfirmationTokenService confirmationTokenService) {
         this.userService = userService;
+        this.confirmationTokenService = confirmationTokenService;
     }
     @InitBinder
     public void initBinder(WebDataBinder dataBinder){
@@ -38,16 +45,6 @@ public class LoginController {
     public String showSignUpForm(@ModelAttribute UserDTO userDTO, Model model) {
         model.addAttribute("userDTO", new UserDTO());
         return "register";
-    }
-
-    @GetMapping("/login")
-    public String login(Model model, @RequestParam (required = false) String error, String logout) {
-        if (error != null)
-            model.addAttribute("errorMsg", "Twoje hasło i/lub email są niepoprawne");
-
-        if(logout != null)
-            model.addAttribute("msg", "Zostałeś wylogowany");
-        return "login";
     }
 
 
@@ -70,8 +67,44 @@ public class LoginController {
         }
 
        userService.register(userDTO);
-        ra.addFlashAttribute("message", "The user has been saved successfully");
+        ra.addFlashAttribute("message", "Email aktywujący konto został wysłany na adres podany podczas rejestracji");
 
         return "login";
+    }
+
+    @GetMapping("/login")
+    public String login(Model model, @RequestParam (required = false) String error, String logout) {
+        if (error != null)
+            model.addAttribute("errorMsg", "Twoje hasło i/lub email są niepoprawne");
+
+        if(logout != null)
+            model.addAttribute("msg", "Zostałeś wylogowany");
+        return "login";
+    }
+
+
+    @GetMapping("/activation/{token}")
+    public String activation (@PathVariable String token, Model model){
+
+        ConfirmationToken confirmationToken = confirmationTokenService.findByToken(token);
+        if(confirmationToken == null){
+            model.addAttribute("message", "Token jest niepoprawny");
+        }else {
+            User user = confirmationToken.getUser();
+
+            if(!user.getEnabled()){
+                if (confirmationToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+                    model.addAttribute("message", "Token jest juz nieaktywny");
+                }else{
+                    user.setEnabled(true);
+                    userService.saveUser(user);
+                    model.addAttribute("message", "Twoje konto zostało aktywowane");
+                }
+            } else{
+                model.addAttribute("message", "Twoje konto już jest aktywne");
+            }
+        }
+
+        return "activation";
     }
 }

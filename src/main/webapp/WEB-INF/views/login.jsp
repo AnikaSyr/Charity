@@ -19,10 +19,11 @@
 </header>
 
 <section class="login-page">
+    <h3><c:out value="${message}"></c:out></h3>
     <h2>Zaloguj się</h2>
     <form method="post" action="/login">
 
-        <div class="form-group ${error != null ? 'has-error': ''}">
+        <div class="form-group">
             <span>${msg}</span>
             <input type="email" name="email" placeholder="Email" />
         </div>

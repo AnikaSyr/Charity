@@ -19,14 +19,14 @@ public class UserDTO {
     private String password;
     @NotBlank(message = "Wprowadź ponownie swoje hasło")
     private String rpassword;
-    private int enabled;
+    private boolean enabled;
     private Set<Role> roles;
 
-    public int getEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(int enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -65,7 +65,7 @@ public class UserDTO {
         this.rpassword = rpassword;
     }
 
-    public UserDTO(String email, String password, String rpassword, int enabled, Set<Role> roles) {
+    public UserDTO(String email, String password, String rpassword, boolean enabled, Set<Role> roles) {
         this.email = email;
         this.password = password;
         this.rpassword = rpassword;
