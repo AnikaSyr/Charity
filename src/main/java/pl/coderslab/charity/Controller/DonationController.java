@@ -56,8 +56,9 @@ public class DonationController {
 
         return "redirect:/form/confirmation";
     }
+
     @RequestMapping(value = "/form/confirmation", method = RequestMethod.GET)
-    public String confirmation () {
+    public String confirmation() {
         return "form_confirmation";
     }
 

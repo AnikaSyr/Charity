@@ -14,13 +14,12 @@ public class EmailSenderService {
     private final JavaMailSender mailSender;
 
 
-
     public EmailSenderService(JavaMailSender mailSender) {
 
         this.mailSender = mailSender;
     }
 
-    public void sendEmail (User user) throws MessagingException {
+    public void sendEmail(User user) throws MessagingException {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("apkacharity@gmail.com");
         message.setTo(user.getEmail());

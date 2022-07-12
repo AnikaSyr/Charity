@@ -14,7 +14,7 @@ public class UserDTO {
     @Email(message = "Wprowadź poprawny adres email")
     private String email;
     @NotBlank(message = "Wprowadź hasło")
-    @Length(min=8, max = 20, message = "Hasło musi zawierać od 8 do 20 znaków")
+    @Length(min = 8, max = 20, message = "Hasło musi zawierać od 8 do 20 znaków")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$", message = "Hasło musi zawierać co najmniej jedną dużą literę, małą, cyfrę oraz znak specjalny")
     private String password;
     @NotBlank(message = "Wprowadź ponownie swoje hasło")

@@ -5,7 +5,7 @@ import pl.coderslab.charity.Model.User;
 
 public interface UserService {
 
-User findUserByEmail (String email);
+    User findUserByEmail(String email);
 
-User saveUser(User user);
+    User saveUser(User user);
 }

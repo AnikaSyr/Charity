@@ -1,48 +1,47 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Give donation</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css"/>
 </head>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 <header class="header--form-page">
-    <%@include file="fragments/header.jsp"%>
-<div class="slogan container container--90">
-    <div class="slogan--item">
-        <h1>
-            Oddaj rzeczy, których już nie chcesz<br />
-            <span class="uppercase">potrzebującym</span>
-        </h1>
+    <%@include file="fragments/header.jsp" %>
+    <div class="slogan container container--90">
+        <div class="slogan--item">
+            <h1>
+                Oddaj rzeczy, których już nie chcesz<br/>
+                <span class="uppercase">potrzebującym</span>
+            </h1>
 
-        <div class="slogan--steps">
-            <div class="slogan--steps-title">Wystarczą 4 proste kroki:</div>
-            <ul class="slogan--steps-boxes">
-                <li>
-                    <div><em>1</em><span>Wybierz rzeczy</span></div>
-                </li>
-                <li>
-                    <div><em>2</em><span>Spakuj je w worki</span></div>
-                </li>
-                <li>
-                    <div><em>3</em><span>Wybierz fundację</span></div>
-                </li>
-                <li>
-                    <div><em>4</em><span>Zamów kuriera</span></div>
-                </li>
-            </ul>
+            <div class="slogan--steps">
+                <div class="slogan--steps-title">Wystarczą 4 proste kroki:</div>
+                <ul class="slogan--steps-boxes">
+                    <li>
+                        <div><em>1</em><span>Wybierz rzeczy</span></div>
+                    </li>
+                    <li>
+                        <div><em>2</em><span>Spakuj je w worki</span></div>
+                    </li>
+                    <li>
+                        <div><em>3</em><span>Wybierz fundację</span></div>
+                    </li>
+                    <li>
+                        <div><em>4</em><span>Zamów kuriera</span></div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
 </header>
 
@@ -78,10 +77,8 @@
                 <h3>Zaznacz co chcesz oddać:</h3>
 
 
-
-
-                        <form:checkboxes class="form-group form-group--checkbox checkbox" path="categories"
-                                         items="${categories}" itemValue="id" itemLabel="name" />
+                <form:checkboxes class="form-group form-group--checkbox checkbox" path="categories"
+                                 items="${categories}" itemValue="id" itemLabel="name"/>
 
 
                 <div class="form-group form-group--buttons">
@@ -96,7 +93,7 @@
                 <div class="form-group form-group--inline">
                     <label>
                         Liczba 60l worków:
-                        <form:input path="quantity" id="quantity" step = "1" min="1"/>
+                        <form:input path="quantity" id="quantity" step="1" min="1"/>
 
                     </label>
                 </div>
@@ -108,7 +105,6 @@
             </div>
 
 
-
             <!-- STEP 4 -->
             <div data-step="3">
                 <h3>Wybierz organizacje, której chcesz pomóc:</h3>
@@ -116,10 +112,10 @@
                 <c:forEach items="${institutions}" var="institution">
                     <div class="form-group form-group--checkbox">
                         <label>
-                            <form:radiobutton path="institution" value="${institution.name}"  id="institution"/>
+                            <form:radiobutton path="institution" value="${institution.name}" id="institution"/>
                             <span class="checkbox radio"></span>
                             <span class="description">
-                  <div class="title" >${institution.name}</div>
+                  <div class="title">${institution.name}</div>
                   <div class="subtitle"> ${institution.description} </div>
                             </span>
                         </label>
@@ -140,24 +136,24 @@
                     <div class="form-section--column">
                         <h4>Adres odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <label> Ulica <form:input path="street" id = 'street' /></label>
+                            <label> Ulica <form:input path="street" id='street'/></label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> Miasto  <form:input path="city" id="city"/> </label>
+                            <label> Miasto <form:input path="city" id="city"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
-                                Kod pocztowy <form:input path="zipCode" id="zipCode" />
+                                Kod pocztowy <form:input path="zipCode" id="zipCode"/>
                             </label>
                         </div>
 
-<%--                        <div class="form-group form-group--inline">--%>
-<%--                            <label>--%>
-<%--                                Numer telefonu <input type="phone" name="phone" />--%>
-<%--                            </label>--%>
-<%--                        </div>--%>
+                            <%--                        <div class="form-group form-group--inline">--%>
+                            <%--                            <label>--%>
+                            <%--                                Numer telefonu <input type="phone" name="phone" />--%>
+                            <%--                            </label>--%>
+                            <%--                        </div>--%>
                     </div>
 
                     <div class="form-section--column">
@@ -212,19 +208,31 @@
                         <div class="form-section--column">
                             <h4>Adres odbioru:</h4>
                             <ul>
-                                <li><div id="streetConf"></div> </li>
-                                <li><div id="cityConf"></div> </li>
-                                <li><div id="zipCodeConf"></div> </li>
-<%--                               <li>123 456 789</li>--%>
+                                <li>
+                                    <div id="streetConf"></div>
+                                </li>
+                                <li>
+                                    <div id="cityConf"></div>
+                                </li>
+                                <li>
+                                    <div id="zipCodeConf"></div>
+                                </li>
+                                    <%--                               <li>123 456 789</li>--%>
                             </ul>
                         </div>
 
                         <div class="form-section--column">
                             <h4>Termin odbioru:</h4>
                             <ul>
-                                <li><div id="dateConf"></div> </li>
-                                <li><div id="timeConf"></div> </li>
-                                <li><div id="notesConf"></div> </li>
+                                <li>
+                                    <div id="dateConf"></div>
+                                </li>
+                                <li>
+                                    <div id="timeConf"></div>
+                                </li>
+                                <li>
+                                    <div id="notesConf"></div>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -239,7 +247,7 @@
     </div>
 </section>
 
-<%@include file="fragments/footer.jsp"%>
+<%@include file="fragments/footer.jsp" %>
 
 </body>
 </html>

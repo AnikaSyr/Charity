@@ -14,7 +14,7 @@ import java.util.Set;
 public class SpringDataUserDetailsService implements UserDetailsService {
     private UserService userService;
 
-@Autowired
+    @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }

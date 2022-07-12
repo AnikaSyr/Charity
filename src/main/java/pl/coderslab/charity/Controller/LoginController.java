@@ -31,10 +31,11 @@ public class LoginController {
     public LoginController(UserServiceImpl userService) {
         this.userService = userService;
     }
+
     @InitBinder
-    public void initBinder(WebDataBinder dataBinder){
+    public void initBinder(WebDataBinder dataBinder) {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-        dataBinder.registerCustomEditor(String.class,stringTrimmerEditor);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
 
@@ -45,16 +46,15 @@ public class LoginController {
     }
 
 
-
     @RequestMapping(value = "/register", method = POST)
     public String handle(@Valid UserDTO userDTO, BindingResult bindingResult, RedirectAttributes ra) {
 
-        if(userService.findUserByEmail(userDTO.getEmail())!=null){
-            bindingResult.addError(new FieldError("userDTO", "email", "Ten email jest już zarejestrowany" ));
+        if (userService.findUserByEmail(userDTO.getEmail()) != null) {
+            bindingResult.addError(new FieldError("userDTO", "email", "Ten email jest już zarejestrowany"));
         }
-        if(userDTO.getPassword() != null && userDTO.getRpassword() != null){
-            if (!userDTO.getPassword().equals(userDTO.getRpassword())){
-                bindingResult.addError(new FieldError("userDTO", "rpassword", "Hasła muszą być takie same" ));
+        if (userDTO.getPassword() != null && userDTO.getRpassword() != null) {
+            if (!userDTO.getPassword().equals(userDTO.getRpassword())) {
+                bindingResult.addError(new FieldError("userDTO", "rpassword", "Hasła muszą być takie same"));
 
             }
         }
@@ -63,39 +63,39 @@ public class LoginController {
             return "register";
         }
 
-       userService.register(userDTO);
+        userService.register(userDTO);
         ra.addFlashAttribute("message", "Email aktywujący konto został wysłany na adres podany podczas rejestracji");
 
         return "login";
     }
 
     @GetMapping("/login")
-    public String login(Model model, @RequestParam (required = false) String error, String logout) {
+    public String login(Model model, @RequestParam(required = false) String error, String logout) {
         if (error != null)
             model.addAttribute("errorMsg", "Twoje hasło i/lub email są niepoprawne");
 
-        if(logout != null)
+        if (logout != null)
             model.addAttribute("msg", "Zostałeś wylogowany");
         return "login";
     }
 
 
     @GetMapping("/activation/{email}/{token}")
-    public String activation (@PathVariable String email, @PathVariable String token, Model model){
+    public String activation(@PathVariable String email, @PathVariable String token, Model model) {
         User user = userService.findUserByEmail(email);
         String confirmationToken = user.getConfirmationToken();
-        if(!confirmationToken.equals(token)){
+        if (!confirmationToken.equals(token)) {
             model.addAttribute("message", "Token jest niepoprawny");
-        }else {
-            if(!user.isEnabled()){
+        } else {
+            if (!user.isEnabled()) {
                 if (user.getExpiryDate().isBefore(LocalDateTime.now())) {
                     model.addAttribute("message", "Token jest juz nieaktywny");
-                }else{
+                } else {
                     user.setEnabled(true);
                     userService.saveUser(user);
                     model.addAttribute("message", "Twoje konto zostało aktywowane");
                 }
-            } else{
+            } else {
                 model.addAttribute("message", "Twoje konto już jest aktywne");
             }
         }

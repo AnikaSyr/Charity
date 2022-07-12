@@ -17,17 +17,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> {
                     try {
                         authz
-                                .antMatchers("/form" ).authenticated()
+                                .antMatchers("/form").authenticated()
                                 .and()
 
 
-
-                        .formLogin()
-                        .loginPage("/login")
-                        .usernameParameter("email")
-                        .defaultSuccessUrl("/user")
-                        .and()
-                        .logout().logoutSuccessUrl("/");
+                                .formLogin()
+                                .loginPage("/login")
+                                .usernameParameter("email")
+                                .defaultSuccessUrl("/user")
+                                .and()
+                                .logout().logoutSuccessUrl("/");
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -40,12 +39,12 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
 
     }
+
     @Bean
     public SpringDataUserDetailsService customUserDetailsService() {
         return new SpringDataUserDetailsService();
     }
 
 
-
-    }
+}
 
