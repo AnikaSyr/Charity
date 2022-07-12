@@ -10,10 +10,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.coderslab.charity.Model.ConfirmationToken;
 import pl.coderslab.charity.Model.User;
 import pl.coderslab.charity.Object.UserDTO;
-import pl.coderslab.charity.Service.ConfirmationTokenService;
 import pl.coderslab.charity.Service.UserServiceImpl;
 
 import javax.validation.Valid;
@@ -28,11 +26,10 @@ public class LoginController {
 
     private final Logger logger = LoggerFactory.getLogger(LoginController.class);
     private final UserServiceImpl userService;
-    private final ConfirmationTokenService confirmationTokenService;
 
-    public LoginController(UserServiceImpl userService, ConfirmationTokenService confirmationTokenService) {
+
+    public LoginController(UserServiceImpl userService) {
         this.userService = userService;
-        this.confirmationTokenService = confirmationTokenService;
     }
     @InitBinder
     public void initBinder(WebDataBinder dataBinder){
@@ -83,17 +80,15 @@ public class LoginController {
     }
 
 
-    @GetMapping("/activation/{token}")
-    public String activation (@PathVariable String token, Model model){
-
-        ConfirmationToken confirmationToken = confirmationTokenService.findByToken(token);
-        if(confirmationToken == null){
+    @GetMapping("/activation/{email}/{token}")
+    public String activation (@PathVariable String email, @PathVariable String token, Model model){
+        User user = userService.findUserByEmail(email);
+        String confirmationToken = user.getConfirmationToken();
+        if(!confirmationToken.equals(token)){
             model.addAttribute("message", "Token jest niepoprawny");
         }else {
-            User user = confirmationToken.getUser();
-
-            if(!user.getEnabled()){
-                if (confirmationToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+            if(!user.isEnabled()){
+                if (user.getExpiryDate().isBefore(LocalDateTime.now())) {
                     model.addAttribute("message", "Token jest juz nieaktywny");
                 }else{
                     user.setEnabled(true);

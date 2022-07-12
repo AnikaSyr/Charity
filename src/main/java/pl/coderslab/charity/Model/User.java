@@ -1,10 +1,18 @@
 package pl.coderslab.charity.Model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -23,56 +31,12 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public Set<Role> getRoles() {
-        return roles;
+    private String confirmationToken;
+
+    private LocalDateTime expiryDate;
+
+    @PrePersist
+    public void setExpiryDate() {
+        this.expiryDate = LocalDateTime.now().plusDays(1);
     }
-
-    public boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public User(Long id, String email, String password, boolean enabled, Set<Role> roles) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.enabled = enabled;
-        this.roles = roles;
-    }
-
-    public User() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
 }

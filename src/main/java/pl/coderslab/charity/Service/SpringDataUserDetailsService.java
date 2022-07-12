@@ -26,6 +26,9 @@ public class SpringDataUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(email);
         }
+        if (!user.isEnabled()) {
+            throw new RuntimeException("Proszę aktywować konto");
+        }
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         user.getRoles().forEach(r ->
                 grantedAuthorities.add(new SimpleGrantedAuthority(r.getName())));

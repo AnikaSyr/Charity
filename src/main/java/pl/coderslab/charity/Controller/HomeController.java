@@ -26,7 +26,7 @@ public class HomeController {
     @GetMapping(value = "/")
     public String getAll(Model model) {
         List<Institution> institutions = institutionService.listAll();
-        int sum = donationService.sumUp();
+        Integer sum = donationService.sumUp();
         long count = donationService.countAllDonations();
         model.addAttribute("institutions", institutions);
         model.addAttribute("sum", sum);

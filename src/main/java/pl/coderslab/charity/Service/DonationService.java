@@ -14,7 +14,7 @@ public class DonationService {
         this.donationRepository = donationRepository;
     }
 
-    public int sumUp() {
+    public Integer sumUp() {
         return donationRepository.sumUp();
     }
 
